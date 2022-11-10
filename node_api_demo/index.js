@@ -1,5 +1,9 @@
 const express = require('express')
+var bodyParser = require('body-parser')
+
 const app = express()
+app.use(bodyParser.urlencoded({ extended: false}))
+app.use(bodyParser.json())
 
 const port = 3000
 
@@ -15,6 +19,22 @@ app.get("/", (req, res) => {
 
 app.get("/phones/:id", (req, res) =>{
     res.json(phones[parseInt(req.params.id) - 1])
+})
+
+app.post("/phones", (req, res) => {
+    console.log(req.body)
+    res.json({message: "OK"})
+})
+
+app.put("/phones/:id", (req, res) => {
+    console.log(req.params.id)
+    console.log(req.body)
+    res.json({message: `update phone ${req.params.id}`})
+})
+
+app.delete("/phones/:id", (req, res) => {
+    console.log(req.params.id)
+    res.json({message: `deleting phone ${req.params.id}`})
 })
 
 app.listen(port, () => {
